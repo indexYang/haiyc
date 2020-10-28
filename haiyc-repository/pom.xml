@@ -16,5 +16,7 @@
             <groupId>com.yc</groupId>
             <artifactId>haiyc-model</artifactId>
         </dependency>
+
+
     </dependencies>
 </project>
