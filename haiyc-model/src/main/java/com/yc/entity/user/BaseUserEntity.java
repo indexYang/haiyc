@@ -1,45 +1,62 @@
 package com.yc.entity.user;
 
+import com.yc.entity.CommonEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
-/**
- * @Description 用户实体
- * @Author 村子里最好的剑
- * @Date 2020-09-03 03:23:52
- */
 
+/**
+ * @Description 用户信息表
+ * @Author 村子里最好的剑
+ * @Date 2020-10-28 15:23
+ */
 @Getter
 @Setter
-@Entity(name = "base_user")
-@org.hibernate.annotations.Table(appliesTo = "base_user", comment = "用户信息表")
-public class BaseUserEntity {
+@ToString
+@ApiModel(description = "用户信息")
+@Table(name = "base_user")
+public class BaseUserEntity extends CommonEntity implements Serializable {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id
-    @Column(name = "userNo", columnDefinition = "VARCHAR(20) NOT NULL COMMENT '用户编码'")
+    @ApiModelProperty(value = "用户编码")
+    @Column(name = "userNo")
     private String userNo;
 
-    @Column(name = "userName", columnDefinition = "VARCHAR(50) DEFAULT NULL COMMENT '用户名'")
+    @ApiModelProperty(value = "用户名")
+    @Column(name = "userName")
     private String userName;
 
-    @Column(name = "password", columnDefinition = "VARCHAR(50) DEFAULT NULL COMMENT '密码'")
+    @ApiModelProperty(value = "密码")
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "status", columnDefinition = "TINYINT(1) DEFAULT NULL COMMENT '状态 0-删除 1-未删除 2-锁定'")
+    @ApiModelProperty(value = "加密盐")
+    @Column(name = "salt")
+    private String salt;
+
+    @ApiModelProperty(value = "手机号码")
+    @Column(name = "phone")
+    private String phone;
+
+    @ApiModelProperty(value = "性别 0-女孩 1-男孩 2-变态 3-人妖")
+    @Column(name = "age")
+    private Integer age;
+
+    @ApiModelProperty(value = "出生日期")
+    @Column(name = "birthDate")
+    private Date birthDate;
+
+    @ApiModelProperty(value = "头像")
+    @Column(name = "imgHead")
+    private String imgHead;
+
+    @ApiModelProperty(value = "状态 0-删除 1-未删除 2-锁定")
+    @Column(name = "status")
     private Integer status;
-
-    @Column(name = "createDate", columnDefinition = "DATETIME DEFAULT NULL COMMENT '创建时间'")
-    private Date createDate;
-
-    @Column(name = "modifyDate", columnDefinition = "DATETIME DEFAULT NULL COMMENT '修改时间'")
-    private Date modifyDate;
-
-    @Column(name = "creatorId", columnDefinition = "VARCHAR(20) DEFAULT NULL COMMENT '创建人ID'")
-    private String creatorId;
-
-    @Column(name = "modifierId", columnDefinition = "VARCHAR(20) DEFAULT NULL COMMENT '修改人ID'")
-    private String modifierId;
 }
