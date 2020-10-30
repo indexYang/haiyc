@@ -16,19 +16,19 @@ import java.util.Date;
 @Setter
 public class CommonEntity {
 
-    @ApiModelProperty(value = "创建时间", name = "createDate")
+    @ApiModelProperty(value = "创建时间")
     @Column(name = "createDate")
     private Date createDate;
 
-    @ApiModelProperty(value = "修改时间", name = "modifyDate")
+    @ApiModelProperty(value = "修改时间")
     @Column(name = "modifyDate")
     private Date modifyDate;
 
-    @ApiModelProperty(value = "创建人ID", name = "creatorId")
+    @ApiModelProperty(value = "创建人ID")
     @Column(name = "creatorId")
     private String creatorId;
 
-    @ApiModelProperty(value = "修改人ID", name = "modifierId")
+    @ApiModelProperty(value = "修改人ID")
     @Column(name = "modifierId")
     private String modifierId;
 }

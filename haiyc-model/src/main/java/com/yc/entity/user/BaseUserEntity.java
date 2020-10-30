@@ -1,5 +1,6 @@
 package com.yc.entity.user;
 
+import com.yc.common.utils.validation.SaveGroup;
 import com.yc.entity.CommonEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,7 +9,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,12 +27,14 @@ import java.util.Date;
 @Table(name = "base_user")
 public class BaseUserEntity extends CommonEntity implements Serializable {
 
+    @Id
     @ApiModelProperty(value = "用户编码")
     @Column(name = "userNo")
     private String userNo;
 
     @ApiModelProperty(value = "用户名")
     @Column(name = "userName")
+    @NotNull(message = "用户名不能为空", groups={SaveGroup.class})
     private String userName;
 
     @ApiModelProperty(value = "密码")
