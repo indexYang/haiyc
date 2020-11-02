@@ -1,7 +1,7 @@
-package com.yc.common.utils.exception;
+package com.yc.common.exception;
 
 
-import com.yc.common.utils.result.ResultCodeEnum;
+import com.yc.common.result.ResultCodeEnum;
 
 /**
  *

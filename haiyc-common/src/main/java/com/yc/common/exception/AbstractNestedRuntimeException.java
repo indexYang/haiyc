@@ -1,4 +1,4 @@
-package com.yc.common.utils.exception;
+package com.yc.common.exception;
 
 /**
  * Handy class for wrapping runtime <code>Exceptions</code> with a root cause.

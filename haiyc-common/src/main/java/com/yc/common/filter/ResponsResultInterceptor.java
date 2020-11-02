@@ -1,7 +1,7 @@
-package com.yc.controller.user;
+package com.yc.common.filter;
 
-import com.yc.common.utils.result.ResponseResult;
-import com.yc.common.utils.result.ResponseURICache;
+import com.yc.common.result.ResponseResult;
+import com.yc.common.result.ResponseURICache;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -21,14 +21,13 @@ public class ResponsResultInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("dasdasd");
         //请求的方法
         if(handler instanceof HandlerMethod){
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Class<?> clazz = handlerMethod.getBeanType();
             Method method = handlerMethod.getMethod();
             String rui = request.getRequestURI();
-            if(null == ResponseURICache.getInstance().get(rui)) {
+            if(false == ResponseURICache.getInstance().get(rui)) {
                 if(clazz.isAnnotationPresent(ResponseResult.class)){
                     ResponseURICache.getInstance().set(rui, true);
                 }else if(method.isAnnotationPresent(ResponseResult.class)){
@@ -45,14 +44,12 @@ public class ResponsResultInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception)
             throws Exception {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView view)
             throws Exception {
         // TODO Auto-generated method stub
-
     }
 
 }

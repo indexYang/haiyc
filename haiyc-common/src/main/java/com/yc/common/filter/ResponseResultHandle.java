@@ -1,8 +1,11 @@
-package com.yc.common.utils.result;
+package com.yc.common.filter;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.yc.common.utils.exception.BaseException;
+import com.yc.common.exception.BaseException;
+import com.yc.common.result.ErrorResult;
+import com.yc.common.result.ResponseURICache;
+import com.yc.common.result.Result;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

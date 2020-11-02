@@ -1,4 +1,4 @@
-package com.yc.common.utils.result;
+package com.yc.common.result;
 
 /**
  * @Description 返回code枚举类型

@@ -1,7 +1,7 @@
 package com.yc.controller.user;
 
 import com.yc.common.utils.PagerWrapper;
-import com.yc.common.utils.result.ResponseResult;
+import com.yc.common.result.ResponseResult;
 import com.yc.dto.user.BaseUserDto;
 import com.yc.service.BaseUserService;
 import org.springframework.beans.factory.annotation.Autowired;

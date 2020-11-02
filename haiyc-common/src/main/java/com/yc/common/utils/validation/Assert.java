@@ -1,6 +1,6 @@
 package com.yc.common.utils.validation;
 
-import com.yc.common.utils.exception.BaseException;
+import com.yc.common.exception.BaseException;
 
 /**
  * @Description: 断言

@@ -1,4 +1,4 @@
-package com.yc.common.utils.result;
+package com.yc.common.result;
 
 import java.util.HashMap;
 import java.util.Map;
