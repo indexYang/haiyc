@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.dao.user.BaseUserDao">
+    <!-- 登录查询用户信息 -->
+    <select id="loginUser" resultType="LoginInfo">
+        select userNo, userName, `password`, imgHead, `status` from base_user where  userName = #{username} and `status` != 0
+    </select>
+
+    <!-- 查询用户列表 -->
+    <select id="listUsers" resultType="BaseUserDto" parameterType="map">
+        SELECT
+            u.userNo,
+            u.userName,
+            u.phone,
+            u.birthDate,
+            u.sex,
+            u.`status`,
+            u.creatorId,
+            u.createDate,
+            u2.userName creatorName
+        FROM
+            `base_user` u
+            LEFT JOIN `base_user` u2 ON u.creatorId = u2.userNo
+        WHERE
+            u.`status` != 0
+        <if test="userNo != null and userNo != ''">
+            AND u.userNo = #{userNo}
+        </if>
+        <if test="userName != null and userName != ''">
+            AND u.userName like CONCAT('%',#{userName},'%')
+        </if>
+        <if test="phone != null and phone != ''">
+            AND u.phone like CONCAT('%',#{phone},'%')
+        </if>
+        ORDER BY u.createDate desc
+            LIMIT #{correctStart}, #{correctSize}
+    </select>
+
+    <!-- 查询用户的总数 -->
+    <select id="countUsers" resultType="Integer" parameterType="map">
+        SELECT
+            count(1)
+        FROM
+            `base_user` u
+        LEFT JOIN `base_user` u2 ON u.creatorId = u2.userNo
+        WHERE
+        u.`status` != 0
+        <if test="userName != null and userName != ''">
+            AND u.userName like CONCAT('%',#{userName},'%')
+        </if>
+        <if test="phone != null and phone != ''">
+            AND u.phone like CONCAT('%',#{phone},'%')
+        </if>
+    </select>
+
+    <!-- 查询用户详情 -->
+    <select id="getUser" resultType="BaseUserDto">
+        SELECT
+            u.userNo,
+            u.userName,
+            u.phone,
+            u.birthDate,
+            u.sex,
+            u.`status`,
+            u.address,
+            u.creatorId,
+            u.createDate,
+            u2.userName creatorName,
+            u.modifierId,
+            u.modifyDate,
+            u3.userName modifierName
+        FROM
+            `base_user` u
+        LEFT JOIN `base_user` u2 ON u.creatorId = u2.userNo
+        LEFT JOIN `base_user` u3 ON u.modifierId = u3.userNo
+        WHERE
+            u.`status` != 0
+            and u.userNo = #{userNo}
+    </select>
+
+    <!-- 查询用户名是否存在-->
+    <select id="findUserName" resultType="BaseUserEntity">
+        SELECT
+            u.userName
+        FROM
+            `base_user` u
+        WHERE
+            u.`status` != 0
+        <choose>
+            <when test="userNo != null and userNo != ''">
+                AND u.userName = #{userName}
+                AND u.userNo != #{userNo}
+            </when>
+            <otherwise>
+                AND u.userName = #{userName}
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 查询手机号码是否存在-->
+    <select id="findUserPhone" resultType="BaseUserEntity">
+        SELECT
+            u.phone
+        FROM
+            `base_user` u
+        WHERE
+            u.`status` != 0
+        <choose>
+            <when test="userNo != null and userNo != ''">
+                AND u.phone = #{phone}
+                AND u.userNo != #{userNo}
+            </when>
+            <otherwise>
+                AND u.phone = #{phone}
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

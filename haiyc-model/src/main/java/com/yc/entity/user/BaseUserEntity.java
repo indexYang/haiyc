@@ -2,7 +2,6 @@ package com.yc.entity.user;
 
 import com.yc.common.utils.validation.SaveGroup;
 import com.yc.entity.CommonEntity;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +22,6 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-@ApiModel(description = "用户信息")
 @Table(name = "base_user")
 public class BaseUserEntity extends CommonEntity implements Serializable {
 
@@ -50,8 +48,8 @@ public class BaseUserEntity extends CommonEntity implements Serializable {
     private String phone;
 
     @ApiModelProperty(value = "性别 0-女孩 1-男孩 2-变态 3-人妖")
-    @Column(name = "age")
-    private Integer age;
+    @Column(name = "sex")
+    private Integer sex;
 
     @ApiModelProperty(value = "出生日期")
     @Column(name = "birthDate")

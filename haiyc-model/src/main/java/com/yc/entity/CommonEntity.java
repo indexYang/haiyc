@@ -1,5 +1,6 @@
 package com.yc.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +19,12 @@ public class CommonEntity {
 
     @ApiModelProperty(value = "创建时间")
     @Column(name = "createDate")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date createDate;
 
     @ApiModelProperty(value = "修改时间")
     @Column(name = "modifyDate")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date modifyDate;
 
     @ApiModelProperty(value = "创建人ID")

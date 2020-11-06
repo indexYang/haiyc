@@ -3,7 +3,7 @@ package com.yc.controller.user;
 import com.yc.common.utils.PagerWrapper;
 import com.yc.common.result.ResponseResult;
 import com.yc.dto.user.BaseUserDto;
-import com.yc.service.BaseUserService;
+import com.yc.service.user.BaseUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +37,7 @@ public class BaseUserController {
         int correctPage = PagerWrapper.correctPage(pageParam.getPage());
         int correctSize = PagerWrapper.correctSize(pageParam.getSize());
         //查询用户信息的列表
-        List<BaseUserDto> listPageUsers = this.baseUserService.listPageUsers(correctPage, correctSize, baseUserDto);
+        List<BaseUserDto> listPageUsers = this.baseUserService.listUsers(correctPage, correctSize, baseUserDto);
         //查询用户信息总条数
         int totalCnt = this.baseUserService.countUsers(baseUserDto);
         return PagerWrapper.create(listPageUsers, correctPage, correctSize).putTotalCnt(totalCnt);

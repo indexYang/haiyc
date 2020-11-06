@@ -1,7 +1,6 @@
 package com.yc.entity.role;
 
 import com.yc.entity.CommonEntity;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -16,7 +15,6 @@ import java.io.Serializable;
 @Setter
 @Getter
 @ToString
-@ApiModel(description = "角色信息")
 @Table(name = "base_role")
 public class BaseRoleEntity extends CommonEntity implements Serializable {
 

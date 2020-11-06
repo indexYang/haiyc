@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.dao.menu.BaseMenuDao">
+
+    <!-- 查询用户的菜单权限 -->
+    <select id="listUserMenu" resultType="UserMenuDto">
+        SELECT DISTINCT
+            m.*
+        FROM
+            `base_menu` m
+            INNER JOIN `base_role_menu` rm ON m.id = rm.menuId
+        WHERE
+            rm.roleId IN ( SELECT ur.roleId FROM `base_user_role` ur WHERE ur.userNo = #{userNo} )
+            AND m.`status` = 1
+            ORDER BY m.seq
+    </select>
+
+    <!-- 查询用户的按钮权限 -->
+    <select id="listPermission" resultType="BaseMenuPermissionEntity">
+        SELECT DISTINCT
+            mp.*
+        FROM
+            `base_menu_permission` mp
+            INNER JOIN `base_role_permission` rp ON mp.id = rp.permissionId
+        WHERE
+            rp.roleId IN ( SELECT ur.roleId FROM `base_user_role` ur WHERE ur.userNo = #{userNo} )
+            AND mp.`status` = 1
+    </select>
+
+</mapper>

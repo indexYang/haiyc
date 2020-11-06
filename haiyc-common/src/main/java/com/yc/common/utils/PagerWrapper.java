@@ -82,5 +82,16 @@ public class PagerWrapper<T> {
         }
         return size;
     }
+
+    /**
+     * 修正页数参数
+     *
+     * @param page page
+     * @return 修正后的值 1-MAX
+     */
+    public static int correctStart(int page, int size) {
+        return (page - 1) * size;
+    }
+
 }
 
