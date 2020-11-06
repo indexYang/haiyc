@@ -63,7 +63,6 @@
             u.birthDate,
             u.sex,
             u.`status`,
-            u.address,
             u.creatorId,
             u.createDate,
             u2.userName creatorName,
