@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.dao.url.HaiycUrlInfoDao">
+
+    <!-- 查询网址信息 -->
+    <select id="queryListUrlInfo" resultType="HaiycUrlInfoDto" parameterType="map">
+        SELECT
+        u.id,
+        u.name,
+        u.account,
+        u.password,
+        u.url,
+        u.remark
+        FROM
+        `haiyc_url_info` u
+        WHERE
+        u.`status` = 1
+        <if test="name != null and name != ''">
+            AND u.name like CONCAT('%',#{name},'%')
+        </if>
+        ORDER BY u.createDate desc
+        LIMIT #{correctStart}, #{correctSize}
+    </select>
+
+    <!-- 查询网址信息总条数 -->
+    <select id="countUrlInfo" resultType="Integer" parameterType="map">
+        SELECT
+            COUNT(1)
+        FROM
+            `haiyc_url_info` u
+        WHERE
+             u.`status` = 1
+        <if test="name != null and name != ''">
+            AND u.name like CONCAT('%',#{name},'%')
+        </if>
+    </select>
+
+    <!-- 查询网址信息详情 -->
+    <select id="getUrlInfo" resultType="HaiycUrlInfoDto">
+        SELECT
+            u.id,
+            u.name,
+            u.account,
+            u.password,
+            u.url,
+            u.remark,
+            u.`status`,
+            u.creatorId,
+            u.createDate,
+            u2.userName creatorName,
+            u.modifierId,
+            u.modifyDate,
+            u3.userName modifierName
+        FROM
+            `haiyc_url_info` u
+        LEFT JOIN `base_user` u2 ON u.creatorId = u2.userNo
+        LEFT JOIN `base_user` u3 ON u.modifierId = u3.userNo
+        WHERE
+            u.`status` = 1
+            and u.id = #{id}
+    </select>
+</mapper>
