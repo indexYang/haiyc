@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ import java.util.Date;
 public class BaseUserEntity extends CommonEntity implements Serializable {
 
     @Id
+    @KeySql(useGeneratedKeys = true)
     @ApiModelProperty(value = "用户编码")
     @Column(name = "userNo")
     private String userNo;

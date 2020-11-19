@@ -7,10 +7,6 @@ import com.yc.common.result.ResultCodeEnum;
 import com.yc.common.utils.CommonUtils;
 import com.yc.common.utils.NumUtil;
 import com.yc.common.utils.PagerWrapper;
-import com.yc.common.utils.validation.Assert;
-import com.yc.common.utils.validation.SaveGroup;
-import com.yc.common.utils.validation.ValidationUtils;
-import com.yc.common.utils.validation.ViolationMessage;
 import com.yc.dao.menu.BaseMenuDao;
 import com.yc.dao.role.BaseRoleDao;
 import com.yc.dao.user.BaseUserDao;
@@ -76,16 +72,7 @@ public class BaseUserServiceImpl implements BaseUserService {
         Map params = new HashMap<>(CommonUtils.initialCapacity(Constant.NUM_5));
         params.put("correctStart", PagerWrapper.correctStart(correctPage, correctSize));
         params.put("correctSize", correctSize);
-        if(StringUtils.isNotEmpty(baseUserDto.getUserNo())){
-            params.put("userNo", baseUserDto.getUserNo());
-        }
-        if(StringUtils.isNotEmpty(baseUserDto.getUserName())){
-            params.put("userName", baseUserDto.getUserName());
-        }
-        if(StringUtils.isNotEmpty(baseUserDto.getPhone())){
-            params.put("phone", baseUserDto.getPhone());
-        }
-
+        checkParam(baseUserDto, params);
         List<BaseUserDto> listUsers = this.baseUserDao.listUsers(params);
         if(CollectionUtil.isNotEmpty(listUsers)){
             for (BaseUserDto user: listUsers) {
@@ -98,15 +85,7 @@ public class BaseUserServiceImpl implements BaseUserService {
         return listUsers;
     }
 
-    /**
-     * 查询用户的总条数
-     * @param baseUserDto
-     * @Date 2020-09-27 09:42
-     * @return int
-     */
-    @Override
-    public int countUsers(BaseUserDto baseUserDto) {
-        Map params = new HashMap<>(CommonUtils.initialCapacity(Constant.NUM_3));
+    private void checkParam(BaseUserDto baseUserDto, Map params) {
         if(StringUtils.isNotEmpty(baseUserDto.getUserNo())){
             params.put("userNo", baseUserDto.getUserNo());
         }
@@ -116,6 +95,18 @@ public class BaseUserServiceImpl implements BaseUserService {
         if(StringUtils.isNotEmpty(baseUserDto.getPhone())){
             params.put("phone", baseUserDto.getPhone());
         }
+    }
+
+    /**
+     * 查询用户的总条数
+     * @param baseUserDto
+     * @Date 2020-09-27 09:42
+     * @return int
+     */
+    @Override
+    public int countUsers(BaseUserDto baseUserDto) {
+        Map params = new HashMap<>(CommonUtils.initialCapacity(Constant.NUM_3));
+        checkParam(baseUserDto, params);
         return this.baseUserDao.countUsers(params);
     }
 
@@ -185,6 +176,8 @@ public class BaseUserServiceImpl implements BaseUserService {
         userEntity.setUserName(baseUserDto.getUserName());
         userEntity.setPhone(baseUserDto.getPhone());
         userEntity.setBirthDate(baseUserDto.getBirthDate());
+        userEntity.setModifyDate(baseUserDto.getModifyDate());
+        userEntity.setModifierId(baseUserDto.getModifierId());
         //根据主键更新实体全部字段，null值会被更新
         this.baseUserDao.updateByPrimaryKey(userEntity);
         //删除角色关系
