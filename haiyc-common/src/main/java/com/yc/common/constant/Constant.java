@@ -155,33 +155,9 @@ public class Constant {
     public static final int TOKEN_STATUS_ONE = 1;
 
     /**
-     * 基站的申请类型
-     * 1-新开户  2-过户
+     * 字典类型
      */
-    public static final int APPLY_TYPE_ONE = 1;
-    public static final String APPLY_TYPE_ONE_VIEW = "新开户";
-    public static final int APPLY_TYPE_TWO = 2;
-    public static final String APPLY_TYPE_TWO_VIEW = "过户";
-
-    /**
-     * 基站的站点类型
-     * 1-基站 2-室分
-     */
-    public static final int STATION_TYPE_ONE = 1;
-    public static final String STATION_TYPE_ONE_VIEW = "基站";
-    public static final int STATION_TYPE_TWO = 2;
-    public static final String STATION_TYPE_TWO_VIEW = "室分";
-
-    /**
-     * 基站的施工状态
-     * 1-未施工 2-施工中 3-已施工
-     */
-    public static final int CONSTRUCTION_STATUS_ONE = 1;
-    public static final String CONSTRUCTION_STATUS_ONE_VIEW = "未施工";
-    public static final int CONSTRUCTION_STATUS_TWO = 2;
-    public static final String CONSTRUCTION_STATUS_TWO_VIEW = "施工中";
-    public static final int CONSTRUCTION_STATUS_THREE = 3;
-    public static final String CONSTRUCTION_STATUS_THREE_VIEW = "已施工";
+    public static final String LEVEL_CODE_TYPE = "LEVEL_TYPE";
 
     /**
      * HTTP降级开关
