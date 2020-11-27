@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.dao.car.card.CarCardInfoDao">
+    <!-- 查询卡会员信息列表 -->
+    <select id="listCarCardInfo" resultType="CarCardInfoDto" parameterType="map">
+        SELECT
+            cci.id,
+            cci.cardNo,
+            cci.userName,
+            cci.phone,
+            cci.carNum,
+            cci.level,
+            bdi.valueName,
+            cci.discount,
+            cci.money,
+            cci.status,
+            cci.limiteDate,
+            cci.remark
+        FROM
+            `car_card_info` cci
+        LEFT JOIN base_dictionary_info bdi ON cci.level = bdi.valueId
+        WHERE
+             cci.`status` != 0
+        AND bdi.typeCode = #{typeCode}
+        <if test="cardNo != null and cardNo != ''">
+            AND cci.cardNo like CONCAT('%',#{cardNo},'%')
+        </if>
+        <if test="phone != null and phone != ''">
+            AND cci.phone like CONCAT('%',#{phone},'%')
+        </if>
+        <if test="carNum != null and carNum != ''">
+            AND cci.carNum like CONCAT('%',#{carNum},'%')
+        </if>
+        <if test="level != null and level != ''">
+            AND cci.level == #{carNum}
+        </if>
+        <if test="status != null and status != ''">
+            AND cci.status like CONCAT('%',#{status},'%')
+        </if>
+        ORDER BY cci.createDate desc
+        LIMIT #{correctStart}, #{correctSize}
+    </select>
+
+    <!-- 查询卡会员信息总数 -->
+    <select id="countCarCardInfo" resultType="Integer" parameterType="map">
+        SELECT
+            COUNT(1)
+        FROM
+        `car_card_info` cci
+        LEFT JOIN base_dictionary_info bdi ON cci.level = bdi.valueId
+        WHERE
+        cci.`status` != 0
+        AND bdi.typeCode = #{typeCode}
+        <if test="cardNo != null and cardNo != ''">
+            AND cci.cardNo like CONCAT('%',#{cardNo},'%')
+        </if>
+        <if test="phone != null and phone != ''">
+            AND cci.phone like CONCAT('%',#{phone},'%')
+        </if>
+        <if test="carNum != null and carNum != ''">
+            AND cci.carNum like CONCAT('%',#{carNum},'%')
+        </if>
+        <if test="level != null and level != ''">
+            AND cci.level == #{carNum}
+        </if>
+        <if test="status != null and status != ''">
+            AND cci.status like CONCAT('%',#{status},'%')
+        </if>
+    </select>
+
+    <!-- 查询卡会员详情 -->
+    <select id="getCarCardInfo" resultType="CarCardInfoDto">
+        SELECT
+           cci.*,
+           bdi.valueName,
+           u2.userName creatorName,
+           u3.userName modifierName
+        FROM
+            `car_card_info` cci
+            LEFT JOIN base_dictionary_info bdi ON cci.level = bdi.valueId
+            LEFT JOIN `base_user` u2 ON cci.creatorId = u2.userNo
+            LEFT JOIN `base_user` u3 ON cci.modifierId = u3.userNo
+        WHERE
+             cci.id = #{id}
+    </select>
+
+    <!-- 校验卡号是否已经存在-->
+    <select id="findCardNo" resultType="CarCardInfoEntity">
+        SELECT
+        cci.cardNo
+        FROM
+        `car_card_info` cci
+        WHERE
+        cci.`status` != 0
+        <choose>
+            <when test="id != null and id != ''">
+                AND cci.cardNo = #{cardNo}
+                AND cci.id != #{id}
+            </when>
+            <otherwise>
+                AND cci.cardNo = #{cardNo}
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 校验手机号码是否已经存在-->
+    <select id="findPhone" resultType="CarCardInfoEntity">
+        SELECT
+        cci.phone
+        FROM
+        `car_card_info` cci
+        WHERE
+        cci.`status` != 0
+        <choose>
+            <when test="id != null and id != ''">
+                AND cci.phone = #{phone}
+                AND cci.id != #{id}
+            </when>
+            <otherwise>
+                AND cci.phone = #{phone}
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

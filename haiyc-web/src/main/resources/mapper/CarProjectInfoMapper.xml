@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.dao.car.card.CarProjectInfoDao">
+    <!-- 查询项目信息列表 -->
+    <select id="listCarProjectInfo" resultType="CarProjectInfoDto" parameterType="map">
+        SELECT
+            cpi.id,
+            cpi.projectName,
+            cpi.projectContent,
+            cpi.remark,
+            cpi.status
+        FROM
+            `car_project_info` cpi
+        WHERE
+            cpi.`status` != 0
+        <if test="projectName != null and projectName != ''">
+            AND cpi.projectName like CONCAT('%',#{projectName},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND cpi.status = #{status}
+        </if>
+        ORDER BY cpi.createDate desc
+        LIMIT #{correctStart}, #{correctSize}
+    </select>
+
+    <!-- 查询项目信息总数 -->
+    <select id="countCarProjectInfo" resultType="Integer" parameterType="map">
+        SELECT
+            COUNT(1)
+        FROM
+            `car_project_info` cpi
+        WHERE
+        cpi.`status` != 0
+        <if test="projectName != null and projectName != ''">
+            AND cpi.projectName like CONCAT('%',#{projectName},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND cpi.status = #{status}
+        </if>
+    </select>
+
+    <!-- 查询项目信息详情 -->
+    <select id="getCarProjectInfo" resultType="CarProjectInfoDto">
+        SELECT
+           cpi.*
+        FROM
+            `car_project_info` cpi
+        WHERE
+             cpi.id = #{id}
+    </select>
+
+    <!-- 查询项目名是否已经存在-->
+    <select id="findProjectName" resultType="CarProjectInfoEntity">
+        SELECT
+            cpi.projectName
+        FROM
+            `car_project_info` cpi
+        WHERE
+            cpi.`status` != 0
+        <choose>
+            <when test="id != null and id != ''">
+                AND cpi.projectName = #{projectName}
+                AND cpi.id != #{id}
+            </when>
+            <otherwise>
+                AND cpi.projectName = #{projectName}
+            </otherwise>
+        </choose>
+    </select>
+</mapper>
