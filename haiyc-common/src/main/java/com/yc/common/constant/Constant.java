@@ -172,6 +172,17 @@ public class Constant {
      * 初始密码123456
      */
     public static final String INITIAL_PWD = "123456";
+
+    /**
+     * 状态 0-删除 1-有效 2-失效
+     */
+    public static final int STATUS_ZERO = 0;
+    public static final String STATUS_ZERO_VIEW = "删除";
+    public static final int STATUS_ONE = 1;
+    public static final String STATUS_ONE_VIEW = "有效";
+    public static final int STATUS_TWO = 2;
+    public static final String STATUS_TWO_VIEW = "失效";
+
     /**
      * CORS跨域
      */
@@ -182,8 +193,7 @@ public class Constant {
     public static final String CORS_RES_METHODS = "Access-Control-Allow-Methods";
     public static final String CORS_RES_METHODS_VALUE = "POST,GET,OPTIONS";
     public static final String CORS_RES_HEADER = "Access-Control-Allow-Headers";
-    public static final String CORS_RES_HEADER_VALUE =
-            "x-requested-with,content-type,token,cookies";
+    public static final String CORS_RES_HEADER_VALUE = "x-requested-with,content-type,token,cookies";
     public static final String CORS_RES_MAX_AGE = "Access-Control-Max_Age";
     public static final String CORS_RES_MAX_AGE_VALUE = "3600";
     public static final String CORS_TRUE = "true";

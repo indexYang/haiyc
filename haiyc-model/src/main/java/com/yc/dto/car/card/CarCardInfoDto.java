@@ -2,7 +2,6 @@ package com.yc.dto.car.card;
 
 import com.yc.common.constant.Constant;
 import com.yc.entity.car.card.CarCardInfoEntity;
-import lombok.*;
 
 /**
  * @Description 车修-卡会员dto
@@ -14,6 +13,7 @@ public class CarCardInfoDto extends CarCardInfoEntity {
     //级别名称
     private String valueName;
 
+    //状态展示 0-删除 1-有效 2-失效
     private String statusView;
 
     //创建人
@@ -33,14 +33,14 @@ public class CarCardInfoDto extends CarCardInfoEntity {
     public String getStatusView() {
         if(null != getStatus()){
             switch(getStatus()){
-                case Constant.NUM_0:
-                    statusView = "删除";
+                case Constant.STATUS_ZERO:
+                    statusView = Constant.STATUS_ZERO_VIEW;
                     break;
-                case Constant.NUM_1:
-                    statusView = "有效";
+                case Constant.STATUS_ONE:
+                    statusView = Constant.STATUS_ONE_VIEW;
                     break;
-                case Constant.NUM_2:
-                    statusView = "失效";
+                case Constant.STATUS_TWO:
+                    statusView = Constant.STATUS_TWO_VIEW;
                     break;
             }
         }
