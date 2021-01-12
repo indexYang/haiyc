@@ -1,6 +1,15 @@
 package com.yc.dto.car.card;
 
-import com.yc.entity.car.card.CarCardInfoEntity;
+import lombok.*;
+import com.yc.entity.car.card.CarCardLevelEntity;
 
-public class CarCardLevelDto extends CarCardInfoEntity {
+/**
+ * @Description CarCardLevel
+ * @Author HaiYc
+ * @Date 2021-01-12 04:43:57
+ */
+@Setter
+@Getter
+public class CarCardLevelDto extends CarCardLevelEntity {
+
 }

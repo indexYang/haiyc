@@ -31,7 +31,7 @@ public class CarCardInfoController extends BaseController {
     * @Date 2020-11-18 14:17
     * @return PagerWrapper<CarCardInfoDto>
     */
-   @RequestMapping(value = "listCarCardInfo.htm", method = RequestMethod.GET)
+   @GetMapping(value = "listCarCardInfo.htm")
    @ResponseResult
    public PagerWrapper<CarCardInfoDto> listCarCardInfo(PagerWrapper<CarCardInfoDto> pageParam, CarCardInfoDto carCardInfoDto){
       int correctPage = PagerWrapper.correctPage(pageParam.getPage());
@@ -49,7 +49,7 @@ public class CarCardInfoController extends BaseController {
     * @Date 2020-11-18 14:21
     * @return void
     */
-   @RequestMapping(value = "addOrModifyCarCardInfo.do", method = RequestMethod.POST)
+   @PostMapping(value = "addOrModifyCarCardInfo.do")
    @ResponseResult
    public void addOrModifyCarCardInfo(CarCardInfoDto carCardInfoDto){
       carCardInfoDto.setModifierId(getUserInfo().getUserNo());

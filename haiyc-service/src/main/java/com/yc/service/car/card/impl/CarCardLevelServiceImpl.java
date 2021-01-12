@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Description
+ * @Description CarCardLevel
  * @Author HaiYc
- * @Date 2021-01-07 03:49:11
+ * @Date 2021-01-12 04:44:38
  */
 @Service
 public class CarCardLevelServiceImpl implements CarCardLevelService {
@@ -29,11 +29,11 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
    private CarCardLevelDao carCardLevelDao;
 
    /**
-    * 查询***列表
-    * @param correctPage 起始�?
-    * @param correctSize 页大�?
+    * SELECT CarCardLevel PAGE
+    * @param correctPage
+    * @param correctSize
     * @param carCardLevel
-    * @Date 2021-01-07 03:49:11
+    * @Date 2021-01-12 04:44:38
     * @return List<CarCardLevelDto>
     */
    @Override
@@ -45,9 +45,9 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
    }
 
    /**
-    * 查询***总数
+    * SELECT CarCardLevel COUNT
     * @param carCardLevel
-    * @Date 2021-01-07 03:49:11
+    * @Date 2021-01-12 04:44:38
     * @return int
     */
    @Override
@@ -57,9 +57,9 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
    }
 
    /**
-    * 查询***详情
+    * INFO CarCardLevel
     * @param id 主键
-    * @Date 2021-01-07 03:49:11
+    * @Date 2021-01-12 04:44:38
     * @return CarCardLevelDto
     */
    @Override
@@ -68,9 +68,9 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
    }
 
    /**
-    * 新增***
+    * ADD CarCardLevel
     * @param carCardLevel
-    * @Date 2021-01-07 03:49:11
+    * @Date 2021-01-12 04:44:38
     * @return void
     */
    @Override
@@ -83,9 +83,9 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
    }
 
    /**
-    * 修改***
+    * UPDATE CarCardLevel
     * @param carCardLevel
-    * @Date 2021-01-07 03:49:11
+    * @Date 2021-01-12 04:44:38
     * @return void
     */
    @Override
@@ -97,22 +97,20 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
        if(null == carCardLevelEntity){
            throw new BaseException(ResultCodeEnum.FAIL.code(), "", "该信息不存在，请核实");
        }
-       //参数赋�??
+       //参数SET
 
-       //根据主键更新实体全部字段，null值会被更�?
       carCardLevelDao.updateByPrimaryKey(carCardLevelEntity);
    }
 
    /**
-    * 删除***
+    * DEL CarCardLevel
     * @param carCardLevel
-    * @Date 2021-01-07 03:49:11
+    * @Date 2021-01-12 04:44:38
     * @return void
     */
    @Override
    @Transactional(rollbackFor = Exception.class)
    public void delCarCardLevel(CarCardLevelEntity carCardLevel){
-       //根据主键更新属�?�不为null的�??/
       carCardLevelDao.updateByPrimaryKeySelective(carCardLevel);
    }
 }
