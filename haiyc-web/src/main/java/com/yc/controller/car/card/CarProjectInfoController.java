@@ -95,4 +95,16 @@ public class CarProjectInfoController extends BaseController {
          carProjectInfoService.delCarProjectInfo(carProjectInfoEntity);
       }
    }
+
+   /**
+    * 查询所有有限的项目
+    * @Author 村子里最好的剑
+    * @Date 2021-01-13 14:34
+    * @return List<CarProjectInfoEntity>
+    */
+   @GetMapping("findAllCarProjectInfo.htm")
+   @ResponseResult
+   public List<CarProjectInfoEntity> findAllCarProjectInfo(){
+      return carProjectInfoService.findAllCarProjectInfo();
+   }
 }

@@ -6,6 +6,7 @@ import com.yc.common.exception.BaseException;
 import com.yc.common.result.ErrorResult;
 import com.yc.common.result.ResponseURICache;
 import com.yc.common.result.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @Date 2020-10-30 15:28
  */
 @ControllerAdvice
+@Slf4j
 public class ResponseResultHandle implements ResponseBodyAdvice<Object> {
 
     //是否请求包含了包装注解标记，没有就直接返回，不需要重写返回体
@@ -54,6 +56,7 @@ public class ResponseResultHandle implements ResponseBodyAdvice<Object> {
         errorResult.setCode(500);
         errorResult.setMessage("服务器异常");
         errorResult.setErrors(e.getClass().getName());
+        log.info("【服务器异常】：{}", errorResult);
         return errorResult;
     }
 

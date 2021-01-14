@@ -47,5 +47,13 @@ public class ErrorResult {
         this.errors = errors;
     }
 
+    @Override
+    public String toString() {
+        return "ErrorResult{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                ", errors=" + errors +
+                '}';
+    }
 }
 

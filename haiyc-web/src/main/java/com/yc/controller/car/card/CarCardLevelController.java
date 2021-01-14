@@ -4,6 +4,7 @@ import com.yc.service.car.card.CarCardLevelService;
 import com.yc.dto.car.card.CarCardLevelDto;
 import com.yc.entity.car.card.CarCardLevelEntity;
 import com.yc.controller.BaseController;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/carCardLevel")
+@Slf4j
 public class CarCardLevelController extends BaseController{
 
    @Autowired

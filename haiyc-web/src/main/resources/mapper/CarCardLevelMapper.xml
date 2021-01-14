@@ -2,5 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yc.dao.car.card.CarCardLevelDao">
+    <!-- 查询会员等级列表 -->
+    <select id="listCarCardLevel" resultType="CarCardLevelDto" parameterType="map">
+        SELECT
+            i.id,
+            i.levelName,
+            i.remark,
+            i.createDate,
+            i.`status`
+        FROM
+            `car_card_level` i
+        WHERE
+            i.`status` != 0
+        <if test="levelName != null and levelName != ''">
+            AND i.levelName like CONCAT('%',#{levelName},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND i.status = #{status}
+        </if>
+        ORDER BY i.`status`, i.createDate desc
+        LIMIT #{correctStart}, #{correctSize}
+    </select>
 
+    <!-- 查询会员等级总条数 -->
+    <select id="countCarCardLevel" resultType="Integer" parameterType="map">
+        SELECT
+            COUNT(1)
+        FROM
+            `car_card_level` i
+        WHERE
+            i.`status` != 0
+        <if test="levelName != null and levelName != ''">
+            AND i.levelName like CONCAT('%',#{levelName},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND i.status = #{status}
+        </if>
+    </select>
+
+    <!-- 查询等级名称是否存在 -->
+    <select id="findLevelName" resultType="CarCardLevelEntity">
+        SELECT
+            i.levelName
+        FROM
+            `car_card_level` i
+        WHERE
+            i.`status` != 0
+        <choose>
+            <when test="id != null and id != ''">
+                AND i.levelName = #{levelName}
+                AND i.id != #{id}
+            </when>
+            <otherwise>
+                AND i.levelName = #{levelName}
+            </otherwise>
+        </choose>
+    </select>
 </mapper>

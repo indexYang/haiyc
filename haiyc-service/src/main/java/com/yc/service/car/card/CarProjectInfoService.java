@@ -61,4 +61,11 @@ public interface CarProjectInfoService {
      * @return void
      */
     void delCarProjectInfo(CarProjectInfoEntity carProjectInfoEntity);
+
+    /**
+     * 查询所有有限的项目
+     * @Date 2021-01-13 14:34
+     * @return List<CarProjectInfoEntity>
+     */
+    List<CarProjectInfoEntity> findAllCarProjectInfo();
 }

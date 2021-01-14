@@ -32,10 +32,11 @@ public interface CarCardLevelDao extends Mapper<CarCardLevelEntity>, MySqlMapper
    int countCarCardLevel(Map params);
 
    /**
-    * INFO CarCardLevel
+    * 查询等级名称是否存在
     * @param id 主键
-    * @Date 2021-01-12 04:44:15
-    * @return int
+    * @param levelName 等级名称
+    * @Date 2021-01-13 12:43:15
+    * @return CarCardLevelEntity
     */
-   CarCardLevelDto getCarCardLevel(Long id);
+   CarCardLevelEntity findLevelName(Long id, String levelName);
 }

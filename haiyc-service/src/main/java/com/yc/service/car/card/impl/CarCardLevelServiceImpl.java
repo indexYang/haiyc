@@ -4,6 +4,7 @@ import com.yc.dao.car.card.CarCardLevelDao;
 import com.yc.service.car.card.CarCardLevelService;
 import com.yc.dto.car.card.CarCardLevelDto;
 import com.yc.entity.car.card.CarCardLevelEntity;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +39,15 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
     */
    @Override
    public List<CarCardLevelDto> listCarCardLevel(int correctPage, int correctSize, CarCardLevelDto carCardLevel){
-       Map params = new HashMap<>(CommonUtils.initialCapacity(Constant.NUM_2));
+       Map params = new HashMap<>(CommonUtils.initialCapacity(Constant.NUM_4));
        params.put("correctStart", PagerWrapper.correctStart(correctPage, correctSize));
        params.put("correctSize", correctSize);
+       if(StringUtils.isNotEmpty(carCardLevel.getLevelName())){
+           params.put("levelName", carCardLevel.getLevelName());
+       }
+       if(null != carCardLevel.getStatus()){
+           params.put("status", carCardLevel.getStatus());
+       }
        return carCardLevelDao.listCarCardLevel(params);
    }
 
@@ -52,7 +59,13 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
     */
    @Override
    public int countCarCardLevel(CarCardLevelDto carCardLevel){
-       Map params = new HashMap<>(CommonUtils.initialCapacity(Constant.NUM_1));
+       Map params = new HashMap<>(CommonUtils.initialCapacity(Constant.NUM_2));
+       if(StringUtils.isNotEmpty(carCardLevel.getLevelName())){
+           params.put("levelName", carCardLevel.getLevelName());
+       }
+       if(null != carCardLevel.getStatus()){
+           params.put("status", carCardLevel.getStatus());
+       }
        return carCardLevelDao.countCarCardLevel(params);
    }
 
@@ -64,7 +77,8 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
     */
    @Override
    public CarCardLevelDto getCarCardLevel(Long id){
-       return carCardLevelDao.getCarCardLevel(id);
+       CarCardLevelEntity carCardLevelEntity = carCardLevelDao.selectByPrimaryKey(id);
+       return CommonUtils.transform(carCardLevelEntity, CarCardLevelDto.class);
    }
 
    /**
@@ -77,10 +91,30 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
    @Transactional(rollbackFor = Exception.class)
    public void addCarCardLevel(CarCardLevelDto carCardLevel){
        //参数校验
-
+       checkParamsCarCardLevel(carCardLevel);
        CarCardLevelEntity carCardLevelEntity = CommonUtils.transform(carCardLevel, CarCardLevelEntity.class);
        carCardLevelDao.insertSelective(carCardLevelEntity);
    }
+
+    /**
+     * 校验参数
+     * @param carCardLevel
+     */
+    private void checkParamsCarCardLevel(CarCardLevelDto carCardLevel) {
+        if(StringUtils.isEmpty(carCardLevel.getLevelName())){
+            throw new BaseException(ResultCodeEnum.FAIL.code(), "", "等级名称必填");
+        }else{
+            //校验等级名称是否存在
+            CarCardLevelEntity carCardLevelEntity = carCardLevelDao.findLevelName(carCardLevel.getId(), carCardLevel.getLevelName());
+            if(null != carCardLevelEntity){
+                throw new BaseException(ResultCodeEnum.FAIL.code(), "", "等级名称不能重复，亲");
+            }
+        }
+
+        if(null == carCardLevel.getStatus()){
+            throw new BaseException(ResultCodeEnum.FAIL.code(), "", "是否有限类型必填");
+        }
+    }
 
    /**
     * UPDATE CarCardLevel
@@ -92,17 +126,21 @@ public class CarCardLevelServiceImpl implements CarCardLevelService {
    @Transactional(rollbackFor = Exception.class)
    public void modifyCarCardLevel(CarCardLevelDto carCardLevel){
        //参数校验
-
+       checkParamsCarCardLevel(carCardLevel);
        CarCardLevelEntity carCardLevelEntity = carCardLevelDao.selectByPrimaryKey(carCardLevel.getId());
        if(null == carCardLevelEntity){
            throw new BaseException(ResultCodeEnum.FAIL.code(), "", "该信息不存在，请核实");
        }
-       //参数SET
-
-      carCardLevelDao.updateByPrimaryKey(carCardLevelEntity);
+       //参数
+       carCardLevelEntity.setLevelName(carCardLevel.getLevelName());
+       carCardLevelEntity.setRemark(carCardLevel.getRemark());
+       carCardLevelEntity.setStatus(carCardLevel.getStatus());
+       carCardLevelEntity.setModifierId(carCardLevel.getModifierId());
+       carCardLevelEntity.setModifyDate(carCardLevel.getModifyDate());
+       carCardLevelDao.updateByPrimaryKey(carCardLevelEntity);
    }
 
-   /**
+    /**
     * DEL CarCardLevel
     * @param carCardLevel
     * @Date 2021-01-12 04:44:38

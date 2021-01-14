@@ -149,4 +149,16 @@ public class CarProjectInfoServiceImpl implements CarProjectInfoService {
       //根据主键更新属性不为null的值
       carProjectInfoDao.updateByPrimaryKeySelective(carProjectInfoEntity);
    }
+
+   /**
+    * 查询所有有限的项目
+    * @Date 2021-01-13 14:34
+    * @return List<CarProjectInfoEntity>
+    */
+   @Override
+   public List<CarProjectInfoEntity> findAllCarProjectInfo() {
+      CarProjectInfoEntity carProjectInfoEntity = new CarProjectInfoEntity();
+      carProjectInfoEntity.setStatus(Constant.STATUS_ONE);
+      return carProjectInfoDao.select(carProjectInfoEntity);
+   }
 }
