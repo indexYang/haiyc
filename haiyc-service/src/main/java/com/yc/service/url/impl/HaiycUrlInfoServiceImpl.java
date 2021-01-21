@@ -1,10 +1,12 @@
 package com.yc.service.url.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.yc.common.constant.Constant;
 import com.yc.common.exception.BaseException;
 import com.yc.common.result.ResultCodeEnum;
 import com.yc.common.utils.CommonUtils;
 import com.yc.common.utils.PagerWrapper;
+import com.yc.common.utils.ThreeDes;
 import com.yc.dao.url.HaiycUrlInfoDao;
 import com.yc.dto.url.HaiycUrlInfoDto;
 import com.yc.entity.url.HaiycUrlInfoEntity;
@@ -44,7 +46,13 @@ public class HaiycUrlInfoServiceImpl implements HaiycUrlInfoService {
       if(StringUtils.isNotEmpty(haiycUrlInfoDto.getName())){
          params.put("name", haiycUrlInfoDto.getName());
       }
-      return haiycUrlInfoDao.queryListUrlInfo(params);
+      List<HaiycUrlInfoDto> queryListUrlInfo = haiycUrlInfoDao.queryListUrlInfo(params);
+      if (CollectionUtil.isNotEmpty(queryListUrlInfo)) {
+         queryListUrlInfo.forEach(t -> {
+            t.setPassword(ThreeDes.decrypt(t.getPassword()));
+         });
+      }
+      return queryListUrlInfo;
    }
 
    /**
@@ -88,6 +96,8 @@ public class HaiycUrlInfoServiceImpl implements HaiycUrlInfoService {
       }
       if(StringUtils.isEmpty(haiycUrlInfoDto.getPassword())){
          throw new BaseException(ResultCodeEnum.FAIL.code(), "", "密码不能为空");
+      }else{
+         haiycUrlInfoDto.setPassword(ThreeDes.encrypt(haiycUrlInfoDto.getPassword()));
       }
       if(StringUtils.isEmpty(haiycUrlInfoDto.getUrl())){
          throw new BaseException(ResultCodeEnum.FAIL.code(), "", "url不能为空");
@@ -123,7 +133,11 @@ public class HaiycUrlInfoServiceImpl implements HaiycUrlInfoService {
     */
    @Override
    public HaiycUrlInfoDto getUrlInfo(Long id) {
-      return haiycUrlInfoDao.getUrlInfo(id);
+      HaiycUrlInfoDto getUrlInfo = haiycUrlInfoDao.getUrlInfo(id);
+      if(null != getUrlInfo){
+         getUrlInfo.setPassword(ThreeDes.decrypt(getUrlInfo.getPassword()));
+      }
+      return getUrlInfo;
    }
 
    /**
