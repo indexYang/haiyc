@@ -1,5 +1,6 @@
 package com.yc.controller.car.card;
 
+import com.yc.dto.car.card.CarLevelProjectDto;
 import com.yc.service.car.card.CarCardLevelService;
 import com.yc.dto.car.card.CarCardLevelDto;
 import com.yc.entity.car.card.CarCardLevelEntity;
@@ -98,4 +99,17 @@ public class CarCardLevelController extends BaseController{
            carCardLevelService.delCarCardLevel(carCardLevelEntity);
        }
    }
+
+    /**
+     * 查询会员卡等级对应的次数
+     * @Author HaiYc
+     * @Date 2021-01-22 13:53:53
+     * @return List<CarLevelProjectDto>
+     */
+    @GetMapping(value = "selectLevelProject.do")
+    @ResponseResult
+    public List<CarLevelProjectDto> selectLevelProject(Long id, List<CarLevelProjectDto> list){
+
+        return null;
+    }
 }

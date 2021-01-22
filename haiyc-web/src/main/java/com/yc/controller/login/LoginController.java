@@ -36,6 +36,7 @@ public class LoginController {
             LoginInfo loginInfo = (LoginInfo)SecurityUtils.getSubject().getPrincipal();
             loginInfo.setToken((String) subject.getSession().getId());
             loginInfo.setPassword(null);
+            SecurityUtils.getSubject().getSession().setTimeout(4 * 60 * 60 * 1000L);
             return loginInfo;
         } catch (UnknownAccountException e) {
             throw new BaseException(ResultCodeEnum.ACCOUNT_NOT_EXISTING);
